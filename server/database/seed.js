@@ -1,5 +1,5 @@
 // const db = require('./index.js');
-// const Product = require('./Carousel.js');
+const Product = require('./Carousel.js');
 const faker = require('faker');
 
 const blueBirdFakeData = [];
