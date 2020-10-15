@@ -5,19 +5,19 @@
 ## Table of Contents
 
 1. [API](#API)
-1. [Requirements](#requirements)
-1. [Development](#development)
+2. [Requirements](#requirements)
+3. [Development](#development)
 
 ## API
 
-GET /api/listing/:productId
-- Get the images associated to product id
-POST /api/listing
-- Create a new image entry in the database
-PUT /api/listing/:productId
-- Update the image entity associated to product id
-DELETE
-- Delete the image entity associated to product id
+- GET /api/listing/:productId
+  - Get the images associated to product id
+- POST /api/listing
+  - Create a new image entry in the database
+- PUT /api/listing/:productId
+  - Update the image entity associated to product id
+- DELETE /api/listing/:productId
+  - Delete the image entity associated to product id
 
 app.post('/api/listing', (req, res) => {
   res.send('create an entry in the database');
