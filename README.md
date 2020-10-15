@@ -1,23 +1,27 @@
-# Project Name
+# Photo Carousel - SDC
 
-> Project description
-
-## Related Projects
-
-  - https://github.com/Geese-Witherspoon-Team-6/PhotoCarousel
-  - https://github.com/Geese-Witherspoon-Team-6/Reviews
-  - https://github.com/Geese-Witherspoon-Team-6/StoreFeatured
-  - https://github.com/Geese-Witherspoon-Team-6/ProductDetailsShipping
+> Photo Carousel component of Qsty by Team 6 Geese Witherspoon
 
 ## Table of Contents
 
-1. [Usage](#Usage)
+1. [API](#API)
 1. [Requirements](#requirements)
 1. [Development](#development)
 
-## Usage
+## API
 
-> Some usage instructions
+GET /api/listing/:productId
+- Get the images associated to product id
+POST /api/listing
+- Create a new image entry in the database
+PUT /api/listing/:productId
+- Update the image entity associated to product id
+DELETE
+- Delete the image entity associated to product id
+
+app.post('/api/listing', (req, res) => {
+  res.send('create an entry in the database');
+})
 
 ## Requirements
 

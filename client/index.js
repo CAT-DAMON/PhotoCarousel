@@ -24,7 +24,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    instance.get('/api/carousel')
+    instance.get('/api/listing/1')
       .then((response) => {
         console.log(response);
         let data = response.data.sort((a, b) => {

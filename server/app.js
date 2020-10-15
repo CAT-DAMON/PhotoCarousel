@@ -1,5 +1,6 @@
 const db = require('./database/index.js');
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const Product = require('./database/Carousel.js');
 const cors = require('cors');
@@ -8,39 +9,67 @@ const cors = require('cors');
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static(__dirname + '/../client/dist'))
+app.use(express.static(path.join(__dirname, '..', 'client', 'dist')))
+app.use('/listing', express.static(path.join(__dirname, '..', 'client', 'dist')));
 app.use(cors());
 
-app.get('/api/carousel', (req, res) => {
-  Product.find({}, (err, products) => {
+// Need to add in rest of the CRUD verbs
+app.get('/listing/*', (req, res) => { res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html')); });
+
+// create / POST
+app.post('/api/listing', (req, res) => {
+  res.send('create an entry in the database');
+})
+
+// read / GET
+app.get('/api/listing/:productId', (req, res) => {
+  Product.find({productId: req.params.productId}, (err, products) => {
     if (err) {
       return console.error(err);
     }
-    console.log(products);
     res.send(products);
   })
 })
 
-
-app.get('/api/carousel/:productId', (req, res) => {
-  Product.find({productId: req.params.productId}, (err, product) => {
-    if (err) {
-      return console.error(err);
-    }
-    console.log(product);
-    res.send(product);
-  })
-});
-
-app.get('/api/carousel/products/:name', (req, res) => {
-  Product.find({name: req.params.name}, (err, product) => {
-    if (err) {
-      return console.error(err);
-    }
-    console.log(product);
-    res.send(product);
-  })
+// update / PUT
+app.put('/api/listing/:productId', (req, res) => {
+  res.send(`update entry with id ${req.params.productId}`)
 })
+
+// delete / DELETE
+app.delete('/api/listing/:productId', (req, res) => {
+  res.send(`delete entry with id ${req.params.productId}`)
+})
+
+// app.get('/api/carousel', (req, res) => {
+//   Product.find({}, (err, products) => {
+//     if (err) {
+//       return console.error(err);
+//     }
+//     console.log(products);
+//     res.send(products);
+//   })
+// })
+
+// app.get('/api/carousel/:productId', (req, res) => {
+//   Product.find({productId: req.params.productId}, (err, product) => {
+//     if (err) {
+//       return console.error(err);
+//     }
+//     console.log(product);
+//     res.send(product);
+//   })
+// });
+
+// app.get('/api/carousel/products/:name', (req, res) => {
+//   Product.find({name: req.params.name}, (err, product) => {
+//     if (err) {
+//       return console.error(err);
+//     }
+//     console.log(product);
+//     res.send(product);
+//   })
+// })
 
 
 
