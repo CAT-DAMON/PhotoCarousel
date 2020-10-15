@@ -13,8 +13,11 @@ for (var i = 0; i < 30; i += 1) {
 
 let fakeData = [];
 
+// write an async function to get 10 or 100 records into the db
+// chain functions until i have all the data (start small)
+// async await
 // TODO: need to adjust how I want to deal with the fake images
-for (var i = 1; i <= 10000000; i += 1) {
+for (var i = 1; i <= 100; i += 1) {
   const index = i % 30;
   fakeData.push({
     productId: i,
