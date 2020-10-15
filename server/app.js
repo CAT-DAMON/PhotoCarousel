@@ -9,7 +9,7 @@ const cors = require('cors');
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static(path.join(__dirname, '..', 'client', 'dist')))
+app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
 app.use('/listing', express.static(path.join(__dirname, '..', 'client', 'dist')));
 app.use(cors());
 
@@ -18,28 +18,32 @@ app.get('/listing/*', (req, res) => { res.sendFile(path.join(__dirname, '..', 'c
 
 // create / POST
 app.post('/api/listing', (req, res) => {
+  // TODO: create an entry based on database
   res.send('create an entry in the database');
 })
 
 // read / GET
 app.get('/api/listing/:productId', (req, res) => {
+  // TODO: update code based on database
   Product.find({productId: req.params.productId}, (err, products) => {
     if (err) {
       return console.error(err);
     }
     res.send(products);
-  })
-})
+  });
+});
 
 // update / PUT
 app.put('/api/listing/:productId', (req, res) => {
-  res.send(`update entry with id ${req.params.productId}`)
-})
+  // TODO: create an entry based on database
+  res.send(`update entry with id ${req.params.productId}`);
+});
 
 // delete / DELETE
 app.delete('/api/listing/:productId', (req, res) => {
-  res.send(`delete entry with id ${req.params.productId}`)
-})
+  // TODO: create an entry based on database
+  res.send(`delete entry with id ${req.params.productId}`);
+});
 
 // app.get('/api/carousel', (req, res) => {
 //   Product.find({}, (err, products) => {
@@ -70,8 +74,6 @@ app.delete('/api/listing/:productId', (req, res) => {
 //     res.send(product);
 //   })
 // })
-
-
 
 const port = 3000;
 app.listen(port, () => {
