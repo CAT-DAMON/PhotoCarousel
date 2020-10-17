@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const Product = require('./database/Carousel.js');
 const cors = require('cors');
 
-
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -45,6 +44,8 @@ app.delete('/api/listing/:productId', (req, res) => {
   res.send(`delete entry with id ${req.params.productId}`);
 });
 
+
+// Original API routes
 // app.get('/api/carousel', (req, res) => {
 //   Product.find({}, (err, products) => {
 //     if (err) {
@@ -75,7 +76,7 @@ app.delete('/api/listing/:productId', (req, res) => {
 //   })
 // })
 
-const port = 3000;
+const port = 3003;
 app.listen(port, () => {
   console.log(`server listening to port ${port}`);
 })
