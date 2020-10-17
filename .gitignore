@@ -3,3 +3,4 @@ node_modules/
 client/dist/bundle.js
 package-lock.json
 .env
+photoCarousel.csv

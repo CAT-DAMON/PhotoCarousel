@@ -1,12 +1,14 @@
 const { Client } = require('pg');
 const dotenv = require('dotenv');
 
+dotenv.config();
+
 const client = new Client({
   host: process.env.PGHOST,
   user: process.env.PGUSER,
   password: process.env.PGPASSWORD,
   port: process.env.PGPORT,
-  databse: process.env.PGDATABASE,
+  database: process.env.PGDATABASE,
 })
 client.connect();
 
@@ -15,7 +17,7 @@ CREATE TABLE photo_carousel (
   id serial PRIMARY KEY,
   productId int NOT NULL,
   name varchar,
-  photos varchar,
+  photos varchar[],
 );
 `
 // try {
@@ -25,5 +27,7 @@ CREATE TABLE photo_carousel (
 // } catch (err) {
 //   console.err(err.stack);
 // }
+
+
 
 module.exports = client;
