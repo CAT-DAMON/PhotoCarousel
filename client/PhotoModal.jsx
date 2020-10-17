@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import PhotoCarousel from './PhotoCarousel.jsx';
 
 const PhotoModal = (props) => {
-
   return (
     <div>
       <Modal show={props.show} onHide={props.handleCloseModal} size="lg" centered>
@@ -17,7 +16,6 @@ const PhotoModal = (props) => {
       </Modal>
     </div>
   );
-
 }
 
 export default PhotoModal;

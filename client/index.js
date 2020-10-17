@@ -9,7 +9,7 @@ import { HeartButton } from './styled-components.jsx'
 import { ServiceContainer } from './styled-components.jsx'
 import { CarouselContainer } from './styled-components.jsx'
 import { ModalShow } from './styled-components.jsx'
-var instance = axios.create({ baseURL: 'http://localhost:3000' });
+var instance = axios.create({ baseURL: 'http://localhost:3003' });
 
 class App extends React.Component {
   constructor (props) {
@@ -26,10 +26,6 @@ class App extends React.Component {
   componentDidMount() {
     instance.get('/api/listing/1')
       .then((response) => {
-        console.log(response);
-        let data = response.data.sort((a, b) => {
-          return a.productId - b.productId;
-        })
         this.setState({
           isLoaded: true,
           productData: response.data
@@ -40,15 +36,11 @@ class App extends React.Component {
       })
   }
 
-  log() {
-    console.log('it Worked');
-  }
-
   handleShowModal() {
-    console.log('ModalShowing: ', this.state.show);
     this.setState({
       show: true
     });
+    console.log('ModalShowing: ', this.state.show);
   }
 
   handleCloseModal() {
@@ -59,7 +51,6 @@ class App extends React.Component {
 
 
   render() {
-    console.log('this is your data: ', this.state.productData);
     if (!this.state.isLoaded) {
       return <h3>Loading...</h3>
     } else {
@@ -75,11 +66,9 @@ class App extends React.Component {
             {this.state.show ? <ModalShow> </ModalShow> : <div></div>}
           </ServiceContainer>
         </div>
-            );
-          }
-        }
-      }
-
-      // <PhotoModal show={this.state.show} handleCloseModal={this.handleCloseModal} products={this.state.productData}/>
+      );
+    }
+  }
+}
 
 ReactDOM.render(<App />, document.getElementById('photoCarousel'));
