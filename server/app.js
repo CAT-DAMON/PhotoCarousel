@@ -15,6 +15,9 @@ app.use(cors());
 // Need to add in rest of the CRUD verbs
 app.get('/listing/*', (req, res) => { res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html')); });
 
+// NOTE: s3 url needs to be in this format: 'https://hrr-sdc-catdamon-photo-carousel.s3.us-east-2.amazonaws.com/1.jpg'
+// Currently, Postgres has the url saved as '1.jpg'
+
 // create / POST
 app.post('/api/listing', (req, res) => {
   // TODO: create an entry based on database
