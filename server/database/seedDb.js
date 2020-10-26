@@ -56,12 +56,9 @@ const generateCSVData = async (index, stream) => {
   }
 }
 
-if (process.env.DB === 'postgres') {
-  // Postgres version
-  const loadDataIntoDb = async () => {
-    postgres.connect();
-    console.log(`Connected to postgres on port ${process.env.PGPORT} with host ${process.env.PGHOST} for ${process.env.PGDATABASE}`)
-
+const loadDataIntoDb = async () => {
+  if (process.env.DB === 'postgres') {
+    // Postgres version
     console.log('drop table');
     await postgres.query('DROP TABLE IF EXISTS photo_carousel;');
     console.log('create table');
@@ -73,6 +70,8 @@ if (process.env.DB === 'postgres') {
       photos varchar[]
     );
     `);
+    console.log('create index for productId');
+    await postgres.query(`CREATE INDEX ON photo_carousel (productid);`);
     console.log('load data');
     await postgres.query(`
     COPY photo_carousel(productId, name, photos)
@@ -81,10 +80,8 @@ if (process.env.DB === 'postgres') {
     CSV HEADER;
     `);
     await postgres.end();
-  }
-} else if (process.env.DB === 'cassandra') {
-  // Cassandra version
-  const loadDataIntoDb = async () => {
+  } else if (process.env.DB === 'cassandra') {
+    // Cassandra version
     await cassandra.connect();
     console.log(`Connected to ${cassandra.hosts.length} nodes in the cluster: ${cassandra.hosts.keys().join(', ')}`);
 

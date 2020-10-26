@@ -1,8 +1,10 @@
-const db = require('./database/index.js');
+// const db = require('./database/index.js');
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const Product = require('./database/Carousel.js');
+// const Product = require('./database/Carousel.js');
+const postgres = require('./database/postgres.js');
+const newRelic = require('newrelic');
 const cors = require('cors');
 
 const app = express();
@@ -21,30 +23,64 @@ app.get('/listing/*', (req, res) => { res.sendFile(path.join(__dirname, '..', 'c
 // create / POST
 app.post('/api/listing', (req, res) => {
   // TODO: create an entry based on database
-  res.send('create an entry in the database');
+  const data = req.body;
+
+  const query = {
+    text: 'INSERT INTO photo_carousel(productid, name, photos) VALUES($1::integer, $2::varchar, $3::varchar[])',
+    values: [data.productId, data.name, data.photos],
+  }
+
+  postgres.query(query)
+  .then((result) => {
+    res.send(result);
+  })
+  .catch((err) => {
+    console.error(err.stack);
+  })
+  // res.send('create an entry in the database');
 })
 
 // read / GET
 app.get('/api/listing/:productId', (req, res) => {
   // TODO: update code based on database
-  Product.find({productId: req.params.productId}, (err, products) => {
-    if (err) {
-      return console.error(err);
+  postgres.query(`SELECT * FROM photo_carousel WHERE productid = ${req.params.productId};`)
+  .then((result) => {
+    let resultData = result.rows[0];
+    for (let i = 0; i < resultData.photos.length; i++) {
+      resultData.photos[i] = 'https://hrr-sdc-catdamon-photo-carousel.s3.us-east-2.amazonaws.com/' + resultData.photos[i];
     }
-    res.send(products);
-  });
+
+    res.send([resultData]);
+  })
+  .catch((err) => {
+    console.error(err.stack);
+  })
 });
 
 // update / PUT
 app.put('/api/listing/:productId', (req, res) => {
   // TODO: create an entry based on database
-  res.send(`update entry with id ${req.params.productId}`);
+  postgres.query(`UPDATE photo_carousel SET name = ${req.body.name}, photos = ${req.body.photos} WHERE productid = ${req.params.productId};`)
+  .then((result) => {
+    res.send(result);
+  })
+  .catch((err) => {
+    console.error(err.stack);
+  })
+  // res.send(`update entry with id ${req.params.productId}`);
 });
 
 // delete / DELETE
 app.delete('/api/listing/:productId', (req, res) => {
   // TODO: create an entry based on database
-  res.send(`delete entry with id ${req.params.productId}`);
+  postgres.query(`DELETE FROM photo_carousel WHERE productid = ${req.params.productId};`)
+  .then((result) => {
+    res.send(result);
+  })
+  .catch((err) => {
+    console.error(err.stack);
+  })
+  // res.send(`delete entry with id ${req.params.productId}`);
 });
 
 

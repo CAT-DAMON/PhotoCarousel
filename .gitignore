@@ -4,3 +4,5 @@ client/dist/bundle.js
 package-lock.json
 .env
 photoCarousel.csv
+newrelic.js
+newrelic_agent.log

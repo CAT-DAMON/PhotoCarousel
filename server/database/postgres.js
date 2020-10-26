@@ -11,4 +11,7 @@ const client = new Client({
   database: process.env.PGDATABASE,
 });
 
+client.connect();
+console.log(`Connected to postgres on port ${process.env.PGPORT} with host ${process.env.PGHOST} for ${process.env.PGDATABASE}`)
+
 module.exports = client;
