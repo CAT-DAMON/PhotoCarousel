@@ -7,7 +7,8 @@
     "test": "jest --detectOpenHandles --forceExit",
     "build": "webpack --watch --config webpack.config.js -d",
     "start": "nodemon server/app.js",
-    "seed": "node --max-old-space-size=8192 server/database/seedDb.js"
+    "seed": "node --max-old-space-size=8192 server/database/seedDb.js",
+    "k6": "k6 run k6script.js"
   },
   "repository": {
     "type": "git",

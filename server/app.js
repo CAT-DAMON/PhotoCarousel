@@ -24,7 +24,13 @@ app.get('/listing/*', (req, res) => { res.sendFile(path.join(__dirname, '..', 'c
 app.post('/api/listing', (req, res) => {
   // TODO: create an entry based on database
   const data = req.body;
-  postgres.query(`INSERT INTO photo_carousel(productid, name, photos) VALUES(${req.body.productId}, ${req.body.name}, ${req.body.photos});`)
+
+  const query = {
+    text: 'INSERT INTO photo_carousel(productid, name, photos) VALUES($1::integer, $2::varchar, $3::varchar[])',
+    values: [data.productId, data.name, data.photos],
+  }
+
+  postgres.query(query)
   .then((result) => {
     res.send(result);
   })
@@ -44,7 +50,6 @@ app.get('/api/listing/:productId', (req, res) => {
       resultData.photos[i] = 'https://hrr-sdc-catdamon-photo-carousel.s3.us-east-2.amazonaws.com/' + resultData.photos[i];
     }
 
-    console.log(resultData);
     res.send([resultData]);
   })
   .catch((err) => {
