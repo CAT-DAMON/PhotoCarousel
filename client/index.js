@@ -9,7 +9,6 @@ import { HeartButton } from './styled-components.jsx'
 import { ServiceContainer } from './styled-components.jsx'
 import { CarouselContainer } from './styled-components.jsx'
 import { ModalShow } from './styled-components.jsx'
-var instance = axios.create({ baseURL: 'http://localhost:3003' });
 
 class App extends React.Component {
   constructor (props) {
@@ -24,7 +23,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    instance.get('/api/listing/1')
+    axios.get('/api/listing/1')
       .then((response) => {
         this.setState({
           isLoaded: true,
